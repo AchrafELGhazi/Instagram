@@ -1,21 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package InstagramShop;
 
-import java.time.LocalDate;
-
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 
 public class PaymentInfo {
     private int card_number;
     private String holder;
-    private LocalDate expires;
+    private YearMonth expires;
 
-    public PaymentInfo(int card_number, String holder, LocalDate expires) {
+    public PaymentInfo(int card_number, String holder, String expires) {
         this.card_number = card_number;
         this.holder = holder;
-        this.expires = expires;
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yy");
+        this.expires = YearMonth.parse(expires, formatter);
     }
 
     public int getCardNumber() {
@@ -34,14 +32,15 @@ public class PaymentInfo {
         this.holder = holder;
     }
 
-    public LocalDate getExpires() {
+    public YearMonth getExpires() {
         return expires;
     }
 
-    public void setExpires(LocalDate expires) {
+    public void setExpires(YearMonth expires) {
         this.expires = expires;
     }
 
+    @Override
     public String toString() {
         return "PaymentInfo{" +
                 "card_number=" + card_number +

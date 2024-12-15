@@ -1,33 +1,75 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package InstagramPosting;
 
 import java.net.URL;
-import java.time.LocalTime;
+import java.time.LocalDate;
 import user.Account;
+import InstagramShop.BusinessProduct;
+import java.io.Serializable;
 
+public class Post implements java.io.Serializable, Comparable<Post> {
 
-public class Post {
+    private static final long serialVersionUID = 4L;
+
+    private static int idCounter = 0;
+
+    private final int id;
     private URL mediaFiles;
     private String caption;
     private String hashtags;
-    private LocalTime posted;
+    private final LocalDate datePosted;
     private int likes;
     private int dislikes;
-    private Account poster;
+    private final Account poster;
     private Comment comment;
+    private BusinessProduct tags;
 
-    public Post(URL mediaFiles, String caption, String hashtags, LocalTime posted, int likes, int dislikes, Account poster, Comment comment) {
+    public Post(String caption) {
+        this.id = generateId();
+        this.caption = caption;
+        this.datePosted = LocalDate.now();
+        this.likes = 0;
+        this.dislikes = 0;
+        this.poster = null;
+    }
+
+    public Post(URL mediaFiles, Account poster) {
+        this.id = generateId();
+        this.mediaFiles = mediaFiles;
+        this.poster = poster;
+        this.datePosted = LocalDate.now();
+        this.likes = 0;
+        this.dislikes = 0;
+    }
+
+    public Post(URL mediaFiles, String caption, String hashtags, Account poster) {
+        this.id = generateId();
         this.mediaFiles = mediaFiles;
         this.caption = caption;
         this.hashtags = hashtags;
-        this.posted = posted;
-        this.likes = likes;
-        this.dislikes = dislikes;
         this.poster = poster;
-        this.comment = comment;
+        this.datePosted = LocalDate.now();
+        this.likes = 0;
+        this.dislikes = 0;
+    }
+
+    public Post(URL mediafile, String caption, String hashtags, Account poster, BusinessProduct tags) {
+        this.id = generateId();
+        this.mediaFiles = mediafile;
+        this.caption = caption;
+        this.hashtags = hashtags;
+        this.poster = poster;
+        this.tags = tags;
+        this.datePosted = LocalDate.now();
+        this.likes = 0;
+        this.dislikes = 0;
+    }
+
+    private static int generateId() {
+        return idCounter++;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public URL getMediaFiles() {
@@ -36,6 +78,10 @@ public class Post {
 
     public void setMediaFiles(URL mediaFiles) {
         this.mediaFiles = mediaFiles;
+    }
+
+    public Account getPoster() {
+        return poster;
     }
 
     public String getCaption() {
@@ -54,12 +100,8 @@ public class Post {
         this.hashtags = hashtags;
     }
 
-    public LocalTime getPosted() {
-        return posted;
-    }
-
-    public void setPosted(LocalTime posted) {
-        this.posted = posted;
+    public LocalDate getDatePosted() {
+        return datePosted;
     }
 
     public int getLikes() {
@@ -78,14 +120,6 @@ public class Post {
         this.dislikes = dislikes;
     }
 
-    public Account getPoster() {
-        return poster;
-    }
-
-    public void setPoster(Account poster) {
-        this.poster = poster;
-    }
-
     public Comment getComment() {
         return comment;
     }
@@ -94,15 +128,62 @@ public class Post {
         this.comment = comment;
     }
 
+    public BusinessProduct getTags() {
+        return tags;
+    }
+
+    public void setTags(BusinessProduct tags) {
+        this.tags = tags;
+    }
+
+    public void addLike() {
+        this.likes++;
+        System.out.println("Likes: " + likes);
+    }
+
+    public void addDislike() {
+        this.dislikes++;
+        System.out.println("Dislikes: " + dislikes);
+    }
+
+    public void displayFeedback() {
+        System.out.println("Likes: " + likes);
+        System.out.println("Dislikes: " + dislikes);
+    }
+
+    @Override
     public String toString() {
-        return "Post{" +
-                "mediaFiles=" + mediaFiles +
-                ", caption='" + caption + '\'' +
-                ", hashtags='" + hashtags + '\'' +
-                ", posted=" + posted +
-                ", likes=" + likes +
-                ", dislikes=" + dislikes +
-                ", poster=" + (poster != null ? poster.getUserName() : "none") +
-                '}';
+        return "Post ID: " + id
+                + "\nPost Content: " + mediaFiles
+                + "\nPost Caption: " + caption
+                + "\nPost Hashtags: " + hashtags
+                + "\nDate Posted: " + datePosted
+                + "\nLike Count: " + likes
+                + "\nDislike Count: " + dislikes
+                + "\nPoster: " + this.getPoster();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof Post)) {
+            return false;
+        }
+        Post otherPost = (Post) obj;
+        return this.id == otherPost.id
+                && this.mediaFiles.equals(otherPost.mediaFiles)
+                && this.caption.equals(otherPost.caption)
+                && this.hashtags.equals(otherPost.hashtags)
+                && this.poster.equals(otherPost.poster);
+    }
+
+    @Override
+    public int compareTo(Post otherPost) {
+        if (this.likes < otherPost.likes) {
+            return -1;
+        }
+        if (this.likes > otherPost.likes) {
+            return 1;
+        }
+        return 0;
     }
 }

@@ -1,28 +1,35 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package InstagramPosting;
 
+import java.net.URL;
+import user.Account;
+import InstagramShop.BusinessProduct;
 
-public class Story {
+public class Story extends Post {
 
-    private int duration;
+    public static final int DURATION = 24;
 
-    public Story(int duration) {
-        this.duration = duration;
+    public Story(URL mediaFiles, Account poster) {
+        super(mediaFiles, poster);
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public Story(URL mediaFiles, String caption, String hashtags, Account poster) {
+        super(mediaFiles, caption, hashtags, poster);
+    }
+
+    public Story(URL mediaFiles, String caption, String hashtags, Account poster, BusinessProduct tags) {
+        super(mediaFiles, caption, hashtags, poster, tags);
     }
 
     public int getDuration() {
-        return duration;
+        return DURATION;
     }
 
+    public void showStory() {
+        System.out.println("Displaying story for 24 hours...");
+    }
+
+    @Override
     public String toString() {
-        return "Story Duration: " + duration + " seconds";
+        return super.toString() + "\nDuration: " + DURATION + " hours";
     }
-
 }

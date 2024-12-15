@@ -4,7 +4,6 @@
  */
 package user;
 
-
 public class Account {
 
     private String userName;
@@ -31,10 +30,6 @@ public class Account {
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -55,6 +50,12 @@ public class Account {
         this.member = member;
     }
 
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
+        System.out.println("Password updated successfully.");
+    }
+
+    @Override
     public String toString() {
         return "This account's username is " + userName
                 + ", and its password is " + password

@@ -1,12 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package InstagramShop;
-import java.time.LocalDate;
 
+package InstagramShop;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Order {
+
     private int reference;
     private LocalDate placed;
     private Status status;
@@ -14,11 +13,19 @@ public class Order {
     private PaymentInfo paymentInfo;
     private ShippingInfo shippingInfo;
 
-    public Order(int reference, LocalDate placed, Status status, 
-                 OrderItem orderItem, PaymentInfo paymentInfo, 
-                 ShippingInfo shippingInfo) {
+    public Order(int reference, LocalDate placed, Status status) {
         this.reference = reference;
         this.placed = placed;
+        this.status = status;
+
+    }
+
+    public Order(int reference, String placed, Status status,
+            OrderItem orderItem, PaymentInfo paymentInfo,
+            ShippingInfo shippingInfo) {
+        this.reference = reference;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        this.placed = LocalDate.parse(placed, formatter);
         this.status = status;
         this.orderItem = orderItem;
         this.paymentInfo = paymentInfo;
@@ -73,16 +80,19 @@ public class Order {
         this.shippingInfo = shippingInfo;
     }
 
-    
+    public double calculateTotalPrice() {
+        return orderItem.getBusinessProduct().getPrice() * orderItem.getQty();
+    }
+
+    @Override
     public String toString() {
-        return "Order{" +
-                "reference=" + reference +
-                ", placed=" + placed +
-                ", status=" + status +
-                ", orderItem=" + (orderItem != null ? orderItem.toString() : "No order items") +
-                ", paymentInfo=" + (paymentInfo != null ? paymentInfo.toString() : "No payment info") +
-                ", shippingInfo=" + (shippingInfo != null ? shippingInfo.toString() : "No shipping info") +
-                '}';
+        return "Order{"
+                + "reference=" + reference
+                + ", placed=" + placed
+                + ", status=" + status
+                + ", orderItem=" + (orderItem != null ? orderItem.toString() : "No order items")
+                + ", paymentInfo=" + (paymentInfo != null ? paymentInfo.toString() : "No payment info")
+                + ", shippingInfo=" + (shippingInfo != null ? shippingInfo.toString() : "No shipping info")
+                + '}';
     }
 }
-    

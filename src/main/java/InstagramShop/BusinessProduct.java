@@ -17,6 +17,12 @@ public class BusinessProduct {
         this.link = link;
     }
 
+    public BusinessProduct(String description, double price) {
+        this.description = description;
+        this.price = price;
+        this.link = null;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -41,6 +47,7 @@ public class BusinessProduct {
         this.link = link;
     }
 
+    @Override
     public String toString() {
         return "BusinessProduct{" +
                 "description='" + description + '\'' +

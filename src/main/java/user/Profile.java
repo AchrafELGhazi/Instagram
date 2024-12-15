@@ -1,11 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package user;
 
 import java.net.URL;
-
 
 public class Profile {
 
@@ -49,7 +44,7 @@ public class Profile {
         this.email = email;
     }
 
-    public URL getPicture() {
+    public URL getPicture(){
         return picture;
     }
 
@@ -57,6 +52,12 @@ public class Profile {
         this.picture = picture;
     }
 
+    public void updateBio(String newBio) {
+        this.bio = newBio;
+        System.out.println("Bio updated successfully.");
+    }
+
+    @Override
     public String toString() {
         return "Profile: Name = " + name + ", Bio = " + bio + ", Email = " + email + ", Picture = " + picture;
     }
